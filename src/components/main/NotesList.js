@@ -1,7 +1,8 @@
+import React from 'react';
 import NoteItem from './NoteItem';
 
-function NotesList({ notes, onDelete }) {
-  return notes.length !== 0 ? (
+function NotesList({ notes, onDelete, onArchive }) {
+  return (
     <div className="notes-list">
       {notes.map((note) => (
         <NoteItem
@@ -10,12 +11,12 @@ function NotesList({ notes, onDelete }) {
           title={note.title}
           date={note.createdAt}
           body={note.body}
+          isArchived={note.archived}
           onDelete={onDelete}
+          onArchive={onArchive}
         />
       ))}
     </div>
-  ) : (
-    <p className="notes-list__empty-message">Tidak ada catatan</p>
   );
 }
 
