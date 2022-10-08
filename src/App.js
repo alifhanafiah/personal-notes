@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Swal from 'sweetalert2';
 import Header from './components/header/Header';
 import Body from './components/main/Body';
 import { getInitialData } from './utils/data';
@@ -35,10 +36,37 @@ export class App extends Component {
   };
 
   onDelete = (id) => {
-    this.setState({
-      notes: this.state.notes.filter((note) => {
-        return note.id !== id;
-      }),
+    const note = this.state.notes.filter((note) => {
+      return note.id === id;
+    });
+
+    const title = note[0].title;
+    // sweet alert
+    Swal.fire({
+      title: `Hapus note "${title}"`,
+      text: 'Apakah anda yakin untuk menghapus note ini?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#183153',
+      cancelButtonColor: '#e0e0e0',
+      confirmButtonText: 'Hapus',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // jalankan jika konfirmasi hapus
+        this.setState({
+          notes: this.state.notes.filter((note) => {
+            return note.id !== id;
+          }),
+        });
+
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: `Note "${title}" telah berhasil terhapus`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     });
   };
 
