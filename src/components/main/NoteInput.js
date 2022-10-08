@@ -37,6 +37,7 @@ export class NoteInput extends Component {
     this.setState({
       title: '',
       body: '',
+      sisaKarakter: 50,
     });
   };
 
